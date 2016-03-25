@@ -76,6 +76,16 @@ While node will mostly deal with things asynchronously, Haven OnDemand offers se
 client.call('analyzesentiment', data, callback, true)
 ```
 
+**Querying jobs from async calls**
+
+When you create a job asynchronously, you will get a jobID returned as ```body.data.jobID```. You can then query this job to get it status and eventually the result. You can see the API here: [docs/AsynchronousAPI](https://dev.havenondemand.com/docs/AsynchronousAPI.htm). You use the same ```client.call``` method to query jobs by adding ```jobID``` & ```method``` to the ```data``` object.
+
+```js
+client.call('job', {jobID: <jobID>, type: 'status'}, callback); // get the status of the job, including results if the job is finished.
+
+client.call('job', {jobID: <jobID>, type: 'result'}, callback); // waits until the job has finished and then returns the result.
+```
+
 ### Posting files
 
 File posting is handled using the "file" parameter name which is used for all current file postings in Haven OnDemand
